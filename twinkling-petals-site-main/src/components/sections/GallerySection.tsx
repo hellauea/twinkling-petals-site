@@ -6,56 +6,45 @@ import { Button } from "@/components/ui/button";
 const galleryImages = [
   {
     id: 1,
-    caption: "Art & Craft Activities",
-    color: "from-rainbow-pink to-rainbow-orange",
-    emoji: "🎨",
+    src: "/images/hero-banner.jpeg",
+    caption: "Joyful moments at Twinkling Petals",
+    alt: "Children playing happily at Twinkling Petals Preschool",
   },
   {
     id: 2,
-    caption: "Outdoor Play Time",
-    color: "from-rainbow-green to-rainbow-blue",
-    emoji: "🌳",
+    src: "/images/classroom-activity.jpeg",
+    caption: "Interactive classroom activities",
+    alt: "Children participating in a classroom activity",
   },
   {
     id: 3,
-    caption: "Learning Through Play",
-    color: "from-rainbow-yellow to-rainbow-orange",
-    emoji: "🧩",
+    src: "/images/outdoor-play.jpeg",
+    caption: "Safe outdoor play in our play area",
+    alt: "Kids playing in the outdoor play area",
   },
   {
     id: 4,
-    caption: "Music & Dance",
-    color: "from-rainbow-purple to-rainbow-pink",
-    emoji: "🎵",
+    src: "/images/teacher-with-kids.jpeg",
+    caption: "Caring teachers with children",
+    alt: "Teacher guiding a group of children",
   },
   {
     id: 5,
-    caption: "Festival Celebrations",
-    color: "from-rainbow-orange to-rainbow-yellow",
-    emoji: "🎉",
+    src: "/images/school-facility.jpeg",
+    caption: "Bright and cheerful facilities",
+    alt: "Preschool classroom and facilities",
   },
   {
     id: 6,
-    caption: "Story Time Sessions",
-    color: "from-rainbow-blue to-rainbow-purple",
-    emoji: "📚",
-  },
-  {
-    id: 7,
-    caption: "Science Exploration",
-    color: "from-rainbow-green to-rainbow-yellow",
-    emoji: "🔬",
-  },
-  {
-    id: 8,
-    caption: "Annual Day Performance",
-    color: "from-rainbow-pink to-rainbow-purple",
-    emoji: "🎭",
+    src: "/images/preschool-logo.jpeg",
+    caption: "Twinkling Petals identity",
+    alt: "Twinkling Petals Preschool logo",
   },
 ];
 
 const GallerySection = () => {
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+  const [selectedImage, setSelectedImage] =
+    useState<(typeof galleryImages)[0] | null>(null);
 
   return (
     <section id="gallery" className="py-20 md:py-28 bg-muted/30">
@@ -98,19 +87,17 @@ const GallerySection = () => {
               onClick={() => setSelectedImage(image)}
               whileHover={{ scale: 1.02 }}
             >
-              {/* Gradient background as placeholder */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${image.color}`} />
-              
-              {/* Emoji placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-6xl md:text-7xl opacity-50 group-hover:opacity-70 group-hover:scale-110 transition-all duration-300">
-                  {image.emoji}
-                </span>
-              </div>
+              {/* Actual image */}
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
 
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300 flex items-end">
-                <div className="w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              {/* Hover overlay with caption */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div className="w-full p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   <p className="text-white font-display font-semibold text-sm md:text-base">
                     {image.caption}
                   </p>
@@ -131,16 +118,19 @@ const GallerySection = () => {
               onClick={() => setSelectedImage(null)}
             >
               <motion.div
-                className="relative max-w-3xl w-full aspect-square rounded-3xl overflow-hidden shadow-hover"
+                className="relative max-w-3xl w-full rounded-3xl overflow-hidden shadow-hover bg-black"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${selectedImage.color}`} />
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-9xl mb-4">{selectedImage.emoji}</span>
-                  <p className="text-white font-display font-bold text-2xl">
+                <img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  className="w-full h-full object-contain max-h-[80vh]"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4">
+                  <p className="text-white font-display font-bold text-lg">
                     {selectedImage.caption}
                   </p>
                 </div>
